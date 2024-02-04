@@ -1,0 +1,53 @@
+.input {
+    color: #213547;
+    border: none;
+    font-size: 50px;
+    width: 4rem;
+    text-align: center;
+    font-weight: bold;
+    background-color: #e0ebff;
+    border-radius: 5px;
+}
+
+.input::-webkit-outer-spin-button,
+.input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input:focus {
+    outline: none !important;
+    border: 0px solid #646cff;
+}
+
+.input-small {
+    color: #213547;
+    border: none;
+    font-size: 50px;
+    width: 4rem;
+    text-align: center;
+    font-weight: bold;
+    background-color: #e0ebff;
+    border-radius: 5px;
+}
+
+.input-small::-webkit-outer-spin-button,
+.input-small::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.input-small[type=number] {
+  -moz-appearance: textfield;
+}
+
+.input-small:focus {
+    outline: none !important;
+    border: 0px solid #646cff;
+}
