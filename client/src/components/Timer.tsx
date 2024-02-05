@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Timer.css';
+import mainAlarm from '../sounds/mixkit-game-notification-wave-alarm-987.wav';
+import cycleAlarm from '../sounds/mixkit-interface-hint-notification-911.wav';
 
 const TimerComponent: React.FC = () => {
-  const [inputTime, setInputTime] = useState<string>('');
-  const [remainingTime, setRemainingTime] = useState<number>(0);
-  const [isRunning, setIsRunning] = useState<boolean>(false);
-  const [timerPaused, setTimerPaused] = useState<boolean>(false);
-  const [onBreak, setOnBreak] = useState<boolean>(false);
-  const [pomodoroCycles, setPomodoroCycles] = useState<number>(0);
-  const [pomodoroBreakTime, setPomodoroBreakTime] = useState<string>('');
+    const [inputTime, setInputTime] = useState<string>('');
+    const [remainingTime, setRemainingTime] = useState<number>(0);
+    const [isRunning, setIsRunning] = useState<boolean>(false);
+    const [timerPaused, setTimerPaused] = useState<boolean>(false);
+    const [onBreak, setOnBreak] = useState<boolean>(false);
+    const [pomodoroCycles, setPomodoroCycles] = useState<number>(0);
+    const [pomodoroBreakTime, setPomodoroBreakTime] = useState<string>('');
+    const [mainAlarmSound] = useState(new Audio(mainAlarm));
+    const [cycleAlarmSound] = useState(new Audio(cycleAlarm));
+
 
   useEffect(() => {
     let timerInterval: NodeJS.Timeout;
@@ -20,13 +25,15 @@ const TimerComponent: React.FC = () => {
         if(!onBreak && pomodoroCycles > 0){
             setOnBreak(true);
             handleStartPomodoroTimer();
-
+            cycleAlarmSound.play();
         } else if(onBreak && pomodoroCycles > 0) {
             setOnBreak(false);
             handleStartTimer();
             setPomodoroCycles(pomodoroCycles - 1);
+            cycleAlarmSound.play(); 
         } else {
             setIsRunning(false);
+            mainAlarmSound.play();
         }
         
     }

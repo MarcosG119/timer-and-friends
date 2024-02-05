@@ -1,0 +1,30 @@
+div.message-board {
+    justify-content: center;
+    border-radius: 5px;
+    width: 100%;
+
+}
+
+div.message-board li {
+
+    text-align: left;
+    display: flex;
+    list-style-type: none;
+    width: 90%;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    background-color: #f3f3f3;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+div.message-board input {
+    border: none;
+    font-size: 20px;
+    width: 80%;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+    font-weight: bold;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+}

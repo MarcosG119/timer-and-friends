@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Timer from './components/Timer';
+import ActiveTimer from './components/ActiveTimer';
 
 function App() {
 
@@ -13,9 +13,7 @@ function App() {
         
             <h6>Start a timer and share the link with your friends!</h6>
 
-            <Timer />
-
-
+            <ActiveTimer />
         </>
     );
 }
