@@ -18,9 +18,16 @@ const io = new Server(server, {
 io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
 
-    socket.on("send_message", (newMessage) => {
+
+    socket.on("join_room", (room) => {
+        socket.join(room);
+        console.log(`User ${socket.id} Joined Room: ${room}`);
+    });
+
+
+    socket.on("send_message", (room, newMessage) => {
         console.log(newMessage);
-        socket.broadcast.emit("receive_message", newMessage);
+        socket.to(room).emit("receive_message", newMessage);
     })
 
     socket.on("startTimer", (inputTime) => {

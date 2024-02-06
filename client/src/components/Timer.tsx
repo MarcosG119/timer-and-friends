@@ -7,9 +7,10 @@ import { Socket } from 'socket.io-client';
 
 interface TimerProps {
     socket: Socket;
+    room: string;
 }
 
-const TimerComponent: React.FC<TimerProps> = ({ socket }) => {
+const TimerComponent: React.FC<TimerProps> = ({ socket, room }) => {
     const [inputTime, setInputTime] = useState<string>('');
     const [remainingTime, setRemainingTime] = useState<number>(0);
     const [isRunning, setIsRunning] = useState<boolean>(false);
@@ -20,6 +21,7 @@ const TimerComponent: React.FC<TimerProps> = ({ socket }) => {
     const [mainAlarmSound] = useState(new Audio(mainAlarm));
     const [cycleAlarmSound] = useState(new Audio(cycleAlarm));
 
+    socket;room;
 
   useEffect(() => {
     let timerInterval: NodeJS.Timeout;

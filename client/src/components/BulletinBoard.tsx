@@ -7,9 +7,10 @@ import { Socket } from 'socket.io-client';
 
 interface BulletinBoardProps {
     socket: Socket;
+    room: string;
 }
 
-const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket }) => {
+const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket, room }) => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
@@ -19,7 +20,7 @@ const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket }) => {
         const date = new Date().toLocaleTimeString();
         if (name && message) {
             const newMessage = `${date} - ${name}: ${message}`;
-            socket.emit('send_message', newMessage);
+            socket.emit('send_message', room, newMessage);
             setMessages([...messages, newMessage]);
             setMessage('');
         }

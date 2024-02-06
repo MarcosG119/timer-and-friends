@@ -1,0 +1,11 @@
+.room-input {
+    border: none;
+    font-size: 20px;
+    width: 80%;
+    margin: 5px;
+    padding: 5px;
+    text-align: left;
+    font-weight: bold;
+    background-color: #f3f3f3;
+    border-radius: 5px;
+}
