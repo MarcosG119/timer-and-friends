@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './BulletinBoard.css';
 
-const BulletinBoard: React.FC = () => {
+
+import { Socket } from 'socket.io-client';
+
+interface BulletinBoardProps {
+    socket: Socket;
+}
+
+const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket }) => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
@@ -12,10 +19,17 @@ const BulletinBoard: React.FC = () => {
         const date = new Date().toLocaleTimeString();
         if (name && message) {
             const newMessage = `${date} - ${name}: ${message}`;
+            socket.emit('send_message', newMessage);
             setMessages([...messages, newMessage]);
             setMessage('');
         }
     };
+
+    useEffect(() => {
+        socket.on('receive_message', (newMessage) => {
+            setMessages([...messages, newMessage]);
+        });
+    }, [socket,messages]);
 
     return (
         <div className="message-board">

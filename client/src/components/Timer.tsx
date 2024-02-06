@@ -3,7 +3,13 @@ import './Timer.css';
 import mainAlarm from '../sounds/mixkit-game-notification-wave-alarm-987.wav';
 import cycleAlarm from '../sounds/mixkit-interface-hint-notification-911.wav';
 
-const TimerComponent: React.FC = () => {
+import { Socket } from 'socket.io-client';
+
+interface TimerProps {
+    socket: Socket;
+}
+
+const TimerComponent: React.FC<TimerProps> = ({ socket }) => {
     const [inputTime, setInputTime] = useState<string>('');
     const [remainingTime, setRemainingTime] = useState<number>(0);
     const [isRunning, setIsRunning] = useState<boolean>(false);
