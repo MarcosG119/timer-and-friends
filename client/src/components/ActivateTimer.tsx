@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Timer from './Timer';
-import BulletinBoard from './BulletinBoard';   
 import { Socket } from 'socket.io-client';
 import {generate} from 'random-words';
 
-import './ActiveTimer.css';
+import './ActivateTimer.css';
 
 
 interface ActiveTimerProps {
@@ -61,7 +60,6 @@ const ActivateTimer: React.FC<ActiveTimerProps> = ({ socket }) => {
                 <>
                     <h3>Room: <button style={{ backgroundColor: 'none' }} onClick={handleClipboard}>{room}</button></h3>
                     <Timer socket={socket} room={room}/>
-                    <BulletinBoard socket={socket} room={room}/>
                 </>
             }
         </>

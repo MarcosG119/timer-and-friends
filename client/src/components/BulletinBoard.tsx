@@ -8,12 +8,16 @@ import { Socket } from 'socket.io-client';
 interface BulletinBoardProps {
     socket: Socket;
     room: string;
+    isRunning: boolean;
+    timerPaused: boolean;
+    onBreak: boolean;
 }
 
-const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket, room }) => {
+const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket, room, isRunning, timerPaused, onBreak }) => {
     const [name, setName] = useState('');
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState<string[]>([]);
+    const [ownMessages, setOwnMessages] = useState<string[]>([]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,6 +26,7 @@ const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket, room }) => {
             const newMessage = `${date} - ${name}: ${message}`;
             socket.emit('send_message', room, newMessage);
             setMessages([...messages, newMessage]);
+            setOwnMessages([...ownMessages, newMessage]);
             setMessage('');
         }
     };
@@ -34,11 +39,18 @@ const BulletinBoard: React.FC<BulletinBoardProps> = ({ socket, room }) => {
 
     return (
         <div className="message-board">
+            {(!isRunning || timerPaused || onBreak) && 
             <ul>
                 {messages.map((msg, index) => (
                     <li key={index}>{msg}</li>
                 ))}
+            </ul> || 
+            <ul>
+            {ownMessages.map((msg, index) => (
+                <li key={index}>{msg}</li>
+            ))}
             </ul>
+            }
 
 
             <form onSubmit={handleSubmit}>

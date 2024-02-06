@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import ActivateTimer from './components/ActiveTimer';
+import ActivateTimer from './components/ActivateTimer.tsx';
 import { io } from 'socket.io-client';
 
  const socket = io('http://localhost:3000');
