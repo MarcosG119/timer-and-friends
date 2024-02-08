@@ -4,6 +4,7 @@ services:
     build:
       context: ./client
       dockerfile: Dockerfile
+    image: marcosg119/timer-and-friends:client-latest
     restart: always
     ports:
       - 8000:8000
@@ -14,10 +15,13 @@ services:
       - server
     networks:
       - webappnetwork
+    labels:
+      kompose.service.type: nodeport
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    image: marcosg119/timer-and-friends:server-latest
     restart: always
     ports:
       - 9000:9000
