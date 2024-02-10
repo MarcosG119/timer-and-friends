@@ -1,22 +1,29 @@
-# Use an appropriate Node.js base image
-FROM node:alpine
+# Stage 1: Build the app
+FROM node:alpine as build
 
-# Set the working directory to /client
-WORKDIR /client
+# Working directory that we'll be using
+WORKDIR /app
 
-# copy package.json and package-lock.json into the container at /client
+# Copy the least likely piece to be changed to utilize caching
 COPY package*.json ./
 
-# install dependencies
+# Install packages needed for the app
 RUN npm install
 
-# Copy the current directory contents into the container at /client
-COPY . .
+# Copy the rest of the app
+COPY . ./
 
+# Build your app
 RUN npm run build
 
-# Make port 3000 available to the world outside this container
-EXPOSE 8000
+# Stage 2: Serve the app with nginx
+FROM nginx:stable-alpine
 
-# Run the app when the container launches
-CMD ["npm", "run", "preview"]
+# Copy built app from the build stage to nginx
+COPY --from=build /app/dist /usr/share/nginx/html
+
+# Note to expose port 80
+EXPOSE 80
+
+# Start nginx server
+CMD ["nginx", "-g", "daemon off;"]

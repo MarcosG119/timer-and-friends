@@ -8,9 +8,11 @@ app.use(cors());
 
 const server = http.createServer(app);
 
+const PORT = process.env.PORT || 9000;
+
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:8000",
+        origin: "http://localhost:80",
         methods: ["GET", "POST"]
     }
 });
@@ -91,6 +93,6 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(9000, () => {
-    console.log('listening on *:9000');
+server.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
 });

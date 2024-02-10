@@ -15,8 +15,6 @@ services:
       - server
     networks:
       - webappnetwork
-    labels:
-      kompose.service.type: nodeport
   server:
     build:
       context: ./server
