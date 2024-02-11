@@ -1,10 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
+app.use(cors());
+
 
 const http = require('http');
 const { Server } = require('socket.io');
-const cors = require('cors');
-app.use(cors());
 
 const server = http.createServer(app);
 
@@ -12,14 +13,17 @@ const PORT = process.env.PORT || 9000;
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:80",
-        methods: ["GET", "POST"]
+        origin: "*",
+        methods: ["GET", "POST"],
+        optionsSuccessStatus: 200
     }
 });
 
+var allClients = [];
+
 io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
-
+    allClients.push(socket);
 
     socket.on("join_room", (room) => {
         socket.join(room);
@@ -90,6 +94,9 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         console.log(`User Disconnected: ${socket.id}`);
+
+        var i = allClients.indexOf(socket);
+        allClients.splice(i, 1);
     });
 });
 

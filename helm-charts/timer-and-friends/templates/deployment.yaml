@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "timer-and-friends.fullname" . }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}  
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: client
+          image: "{{ .Values.imageClient.repository }}:{{ .Values.imageClient.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageClient.pullPolicy }}
+          ports:
+            - containerPort: 80
+        - name: server
+          image: "{{ .Values.imageServer.repository }}:{{ .Values.imageServer.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.imageServer.pullPolicy }}
+          ports:
+            - containerPort: 9000
+      restartPolicy: Always

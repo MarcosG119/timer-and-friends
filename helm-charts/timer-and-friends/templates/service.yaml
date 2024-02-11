@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "timer-and-friends.fullname" . }}
+  labels:
+    {{- include "timer-and-friends.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: {{ .Values.service.ports.clientPort.name }}
+      port: {{ .Values.service.ports.clientPort.port }}
+      targetPort: {{ .Values.service.ports.clientPort.targetPort }}
+      protocol: TCP
+    - name: {{ .Values.service.ports.serverPort.name }}
+      port: {{ .Values.service.ports.serverPort.port }}
+      targetPort: {{ .Values.service.ports.serverPort.targetPort }}
+      protocol: TCP
+  selector:
+    {{- include "timer-and-friends.selectorLabels" . | nindent 4 }}

@@ -1,5 +1,6 @@
 # Use an appropriate Node.js base image
-FROM node:alpine
+FROM --platform=linux/amd64 node:alpine as build
+
 
 # Set the working directory to /server
 WORKDIR /server
