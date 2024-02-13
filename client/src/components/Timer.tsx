@@ -50,7 +50,7 @@ const TimerComponent: React.FC<TimerProps> = ({ socket, room }) => {
         });
 
         socket.on("receive_start_timer", (remainingTime, running) => {
-            setRemainingTime(remainingTime);
+            setRemainingTime(remainingTime*60);
             setIsRunning(running);
         })
 
