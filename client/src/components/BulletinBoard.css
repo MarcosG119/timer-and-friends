@@ -6,7 +6,7 @@ div.message-board {
 }
 
 div.message-board li {
-
+    color: #242424;
     text-align: left;
     display: flex;
     list-style-type: none;
