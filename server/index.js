@@ -1,23 +1,28 @@
-const express = require('express');
+const app = require('express')();
 const cors = require('cors');
-const app = express();
 app.use(cors());
+const https = require('https');
+const fs = require('fs');
 
 
-const http = require('http');
-const { Server } = require('socket.io');
-
-const server = http.createServer(app);
-
-const PORT = process.env.PORT || 9000;
-
-const io = new Server(server, {
+const options = {
     cors: {
         origin: "https://timer-and-friends.onrender.com",
         methods: ["GET", "POST"],
         optionsSuccessStatus: 200
-    }
+    },
+    requestCert: false,
+    rejectUnauthorized: false,
+}
+
+const server = https.createServer(options, app);
+const io = require('socket.io')(server);
+const PORT = process.env.PORT || 9000;
+
+server.listen(PORT, () => {
+    console.log(`listening on *:${PORT}`);
 });
+
 
 var allClients = [];
 
@@ -100,6 +105,3 @@ io.on('connection', (socket) => {
     });
 });
 
-server.listen(PORT, () => {
-    console.log(`listening on *:${PORT}`);
-});
