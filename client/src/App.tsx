@@ -2,10 +2,15 @@ import './App.css';
 import ActivateTimer from './components/ActivateTimer.tsx';
 import { io } from 'socket.io-client';
 
- const socket = io('https://timer-and-friend-api.onrender.com:10000');
+const socket = io("timer-and-friends-api.onrender.com", {transports: ['websocket']});
 
-
-
+try{
+    socket.on("successful_connection", () => {
+        console.log("successful client connection");
+    });
+} catch (e) {
+    console.log(e);
+}
 
 function App() {
 

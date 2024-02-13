@@ -1,30 +1,18 @@
-const app = require('express')();
-const cors = require('cors');
-app.use(cors());
-const https = require('https');
-const fs = require('fs');
+'use strict';
+const express = require('express');
+const socketIO = require('socket.io');
+const PORT = process.env.PORT || 9000;
+const INDEX = 'https://timer-and-friends.onrender.com/';
+var allClients = [];
 
+const server = express().use((req, res) => res.sendFile(INDEX, {root: __dirname})).listen(PORT, () => console.log(`Listening on ${PORT}`));
 
-const options = {
+const io = require('socket.io')(server, {
     cors: {
         origin: "https://timer-and-friends.onrender.com",
-        methods: ["GET", "POST"],
-        optionsSuccessStatus: 200
-    },
-    requestCert: false,
-    rejectUnauthorized: false,
-}
-
-const server = https.createServer(options, app);
-const io = require('socket.io')(server);
-const PORT = process.env.PORT || 9000;
-
-server.listen(PORT, () => {
-    console.log(`listening on *:${PORT}`);
+        methods: ["GET", "POST"]
+    }
 });
-
-
-var allClients = [];
 
 io.on('connection', (socket) => {
     console.log(`User Connected: ${socket.id}`);
