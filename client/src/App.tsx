@@ -2,7 +2,7 @@ import './App.css';
 import ActivateTimer from './components/ActivateTimer.tsx';
 import { io } from 'socket.io-client';
 
- const socket = io('http://localhost:9000');
+ const socket = io('http://timer-and-friend-api.onrender.com');
 
 
 
