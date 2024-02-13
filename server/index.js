@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 9000;
 
 const io = new Server(server, {
     cors: {
-        origin: "*",
+        origin: "https://timer-and-friends-api.onrender.com",
         methods: ["GET", "POST"],
         optionsSuccessStatus: 200
     }
