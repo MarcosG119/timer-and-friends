@@ -19,6 +19,7 @@ div.message-board li {
 
 div.message-board input {
     border: none;
+    color: #242424;
     font-size: 20px;
     width: 80%;
     margin: 5px;
